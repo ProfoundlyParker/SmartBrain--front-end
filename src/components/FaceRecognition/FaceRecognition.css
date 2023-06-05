@@ -1,0 +1,15 @@
+/* Face box style */
+.bounding-box {
+    position: absolute;
+    box-shadow: 0 0 0 3px #0d5b8c inset;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Image positioning */
+.facerec {
+    position: relative;
+    width: 500px;
+}
