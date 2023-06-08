@@ -56,6 +56,7 @@ class Register  extends React.Component {
                     type="text" 
                     name="name"  
                     id="name" 
+                    placeholder="Enter your name"
                     onChange={this.onNameChange}
                     />
                 </div>
@@ -66,6 +67,7 @@ class Register  extends React.Component {
                     type="email" 
                     name="email"  
                     id="email" 
+                    placeholder="Enter your email"
                     onChange={this.onEmailChange}
                     />
                 </div>
@@ -76,6 +78,7 @@ class Register  extends React.Component {
                     type="password" 
                     name="password"  
                     id="password" 
+                    placeholder="Enter your password"
                     onChange={this.onPasswordChange}
                     />
                 </div>
