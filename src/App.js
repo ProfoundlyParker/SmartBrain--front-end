@@ -103,7 +103,7 @@ class App extends Component {
       if (this.state.input.length === 0) {
         this.setState({errors: 'Please paste an image link into the field to test'});
       } else {
-          fetch('http://localhost:3001/imageurl', {
+          fetch('https://parkers-smartbrain-api.fly.dev/imageurl', {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({
@@ -114,7 +114,7 @@ class App extends Component {
           .then(response => response.json())
           .then(response => {
           if (response) {
-          fetch('http://localhost:3001/image', {
+          fetch('https://parkers-smartbrain-api.fly.dev/image', {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
