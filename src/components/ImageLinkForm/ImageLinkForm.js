@@ -8,6 +8,7 @@ const ImageLinkForm = ({ input, onInputChange, onPictureSubmit, errors, status }
         <p className="f3">
             {'This Magic Brain will detect faces in your pictures! Paste an image link below to find faces in your images!'}
         </p>
+        <div className="center">
         <div className="form pa3 shadow-5 ba bw0 b--black center">
             <input 
             id="imageupload"
@@ -23,6 +24,7 @@ const ImageLinkForm = ({ input, onInputChange, onPictureSubmit, errors, status }
             </div>
             { errors && <p className="error bg-red white pa2 f4 shadow-1 1h-copy center tc ma4">{`${errors}`}</p>}
             { status && <p className="status bg-blue black pa2 f4 shadow-1 1h-copy center tc ma4">{`${status}`}</p>}
+        </div>
         </div>
     );
 }
