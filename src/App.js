@@ -110,7 +110,6 @@ class App extends Component {
                   input: this.state.input
               })
             })
-        // fetch("https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs", requestOptions)
           .then(response => response.json())
           .then(response => {
           if (response) {
