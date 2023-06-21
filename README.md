@@ -30,7 +30,7 @@ Or, click on the 'Register' button and create your own login details to use inst
 
 ## Description
 <p>A React app that detects and highlights faces in web images. Built with <b>React.js</b>, <b>Node.js</b>, <b>Express</b>, <b>Bcrypt</b>, <b>PostgreSQL</b>, <b>Tachyon CSS</b>, <b>Clarifai Face Detection API</b>, deployed on <b>Fly.io</b></p><br>
-<p><i>A huge thanks to Andrei Neagoie for creating [Zero to Mastery Complete Web Developer Course](https://zerotomastery.io/courses/coding-bootcamp/) and the entire Zero To Mastery platform to help encourage new developers like myself to pursue their passions!</i></p><br>
+<p><i>A huge thanks to Andrei Neagoie for creating <a href='https://zerotomastery.io/courses/coding-bootcamp/'>Zero to Mastery Complete Web Developer Course</a> and the entire Zero To Mastery platform to help encourage new developers like myself to pursue their passions!</i></p><br>
 
 <p>This project was not entirely a code along, as I had to overcome a few challenges:</p><br>
 <li>The Clarifai REST API integratation. Ran into numerous issues with outdated code and documentation. Was also able to use Clarifai model to detect multiple faces, not just one</li>
