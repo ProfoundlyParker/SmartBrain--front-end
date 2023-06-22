@@ -74,7 +74,7 @@ Or, click on the 'Register' button and create your own login details to use inst
 <img src='readme-imgs/sb-validation.png'>
 <img src='readme-imgs/sb-form.png'>
 <img src='readme-imgs/sb-tree.png'>
-<li>Custom site favicon that supports apple and android devices too
+<li>Custom site favicon
 </li>
 <br>
 <img src='public/favicon.ico' height='200' width='200'>
