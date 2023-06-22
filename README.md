@@ -77,7 +77,7 @@ Or, click on the 'Register' button and create your own login details to use inst
 <li>Custom site favicon that supports apple and android devices too
 </li>
 <br>
-<img src='readme-imgs/sb-favicon.png'>
+<img src='public/favicon.ico' height='200' width='200'>
 <li>Bcrypt user password encryption/decryption to/from PostgreSQL/Fly.io Database
 </li>
 <br>
