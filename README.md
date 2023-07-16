@@ -4,7 +4,7 @@ Live Site: https://parkers-smartbrain.fly.dev/
 
 <p>This is the Zero to Mastery Complete Web Developer's course final project - with some added improvements!</p>
 
-![face-detection-example](readme-imgs/face-detect-example.gif)
+![face-detection-example](readme-imgs/sb-image-submit_AdobeExpress.gif)
 
 <h1>How to Use:</h1>
 <p>You can use the following test login information if you'd just like to test the app without creating a new profile:
@@ -14,7 +14,7 @@ Email: a@gmail.com
 Password: 123
 <br></p>
 
-![sign-in-example](readme-imgs/sign-in-example.gif)<br>
+![sign-in-example](readme-imgs/sb-signin_AdobeExpress.gif)<br>
 
 **Please note: Site may take a few seconds to initially load due to Bcrypt password verification<br>
 
@@ -22,15 +22,15 @@ Or, click on the 'Register' button and create your own login details to use inst
 
 ![register](readme-imgs/sb-register.png)<br>
 
-<p>Once logged in, copy and paste an image url from the web into the search input field, then click the 'DETECT' button to run the Face Detection API</p><br>
+<p>Once logged in, copy and paste an image url from the web into the search input field, then click the 'Detect' button to run the Face Detection API</p><br>
 
-![detect-button](readme-imgs/button.gif)<br>
+![detect-button](readme-imgs/sb-image-submit-button_AdobeExpress.gif)<br>
 
 <p>Each time you upload an image, your entry count is increased by +1</p><br>
 
 ## Description
 <p>A React app that detects and highlights faces in web images. Built with <b>React.js</b>, <b>Node.js</b>, <b>Express</b>, <b>Bcrypt</b>, <b>PostgreSQL</b>, <b>Tachyon CSS</b>, <b>Clarifai Face Detection API</b>, deployed on <b>Fly.io</b></p><br>
-<p><i>A huge thanks to Andrei Neagoie for creating [Zero To Mastery Complete Web Developer Course](https://zerotomastery.io/courses/coding-bootcamp/) and the entire Zero To Mastery platform to help encourage new developers like myself to pursue their passions!</i></p><br>
+<p><i>A huge thanks to Andrei Neagoie for creating <a href='https://zerotomastery.io/courses/coding-bootcamp/'>Zero to Mastery Complete Web Developer Course</a> and the entire Zero To Mastery platform to help encourage new developers like myself to pursue their passions!</i></p><br>
 
 <p>This project was not entirely a code along, as I had to overcome a few challenges:</p><br>
 <li>The Clarifai REST API integratation. Ran into numerous issues with outdated code and documentation. Was also able to use Clarifai model to detect multiple faces, not just one</li>
@@ -68,14 +68,16 @@ Or, click on the 'Register' button and create your own login details to use inst
 </li>
 <br>
 <img src='readme-imgs/sb-parallax.gif'>
-<li>Form Validation
+<li>Form Validation & Error Messages
 </li>
 <br>
 <img src='readme-imgs/sb-validation.png'>
-<li>Custom site favicon that supports apple and android devices too
+<img src='readme-imgs/sb-form.png'>
+<img src='readme-imgs/sb-tree.png'>
+<li>Custom site favicon
 </li>
 <br>
-<img src='readme-imgs/sb-favicon.png'>
+<img src='public/favicon.ico' height='200' width='200'>
 <li>Bcrypt user password encryption/decryption to/from PostgreSQL/Fly.io Database
 </li>
 <br>
