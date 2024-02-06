@@ -33,7 +33,7 @@ Or, click on the 'Register' button and create your own login details to use inst
 <p><em>A huge thanks to Andrei Neagoie for creating <a href='https://zerotomastery.io/courses/coding-bootcamp/'>Zero to Mastery Complete Web Developer Course</a> and the entire Zero To Mastery platform to help encourage new developers like myself to pursue their passions!</em></p><br>
 
 <p>This project was not entirely a code along, as I had to overcome a few challenges:</p><br>
-<li>The Clarifai REST API integratation. Ran into numerous issues with outdated code and documentation. Was also able to use Clarifai model to detect multiple faces, not just one</li>
+<li>The Clarifai REST API integration. Ran into numerous issues with outdated code and documentation. Was also able to use Clarifai model to detect multiple faces, not just one</li>
 <li>Deployment - ZTM course deployed to Heroku, but since free tier no longer exists, had to troubleshoot with other hosting services for server, database, and front-end app deployment</li>
 <li>Resolved numerous issues related to using a Windows OS vs Mac (i.e. PATH errors)</li>
 <li>Moving API calls from front-end to back-end for security</li>
