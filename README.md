@@ -18,7 +18,7 @@ Password: 123
 
 **Please note: Site may take a few seconds to initially load due to Bcrypt password verification<br>
 
-Or, click on the 'Register' button and create your own login details to use instead<br>
+Or, you can register a new account. <strong>Note: please use test login info from above, to avoid overloading the database memory. Thanks!</strong><br>
 
 ![register](readme-imgs/sb-register.png)<br>
 
