@@ -1,4 +1,5 @@
 import React from "react";
+import './Signin.css';
 
 // Sign in component - signs in if user exists in Database
 // If user does not exist, error message displays saying to enter correct credentials
@@ -59,7 +60,7 @@ class Signin extends React.Component {
                 <div className="mt3">
                     <label className="db fw6 lh-copy f6" 
                     htmlFor="email-address">Email</label>
-                    <input className={`f5 pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100${formErrors.email && 'ba bw2 b--red'}`} 
+                    <input className={`f5 pa2 input-reset ba bg-transparent hover-bg-black hover-white hover-black w-100${formErrors.email && 'ba bw2 b--red'}`} 
                     type="email" 
                     name="email-address"  
                     placeholder="Enter your email"
@@ -73,7 +74,7 @@ class Signin extends React.Component {
                 <div className="mt3">
                     <label className="db fw6 lh-copy f6" 
                     htmlFor="password">Password</label>
-                    <input className={`b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100${formErrors.password && 'ba bw2 b--red'}`}
+                    <input className={`b pa2 input-reset ba bg-transparent hover-black hover-bg-black hover-white w-100${formErrors.password && 'ba bw2 b--red'}`}
                     type="password" 
                     name="password"  
                     placeholder="Enter your password"

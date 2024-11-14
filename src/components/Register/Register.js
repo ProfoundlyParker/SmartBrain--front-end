@@ -1,4 +1,5 @@
 import React from "react";
+import '../Signin/Signin.css';
 
 // Register component - registers new users when input values are changed
 class Register  extends React.Component {
@@ -52,7 +53,7 @@ class Register  extends React.Component {
                 <div className="mt3">
                     <label className="db fw6 lh-copy f6" 
                     htmlFor="name">Name</label>
-                    <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                    <input className="pa2 hover-black input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                     type="text" 
                     name="name"  
                     id="name" 
@@ -63,7 +64,7 @@ class Register  extends React.Component {
                 <div className="mt3">
                     <label className="db fw6 lh-copy f6" 
                     htmlFor="email">Email</label>
-                    <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                    <input className="pa2 hover-black input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                     type="email" 
                     name="email"  
                     id="email" 
@@ -74,7 +75,7 @@ class Register  extends React.Component {
                 <div className="mv3">
                     <label className="db fw6 lh-copy f6" 
                     htmlFor="password">Password</label>
-                    <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                    <input className="b hover-black pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                     type="password" 
                     name="password"  
                     id="password" 
