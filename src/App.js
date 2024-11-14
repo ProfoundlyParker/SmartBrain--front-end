@@ -7,14 +7,17 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
+import Modal from './components/Modal/Modal';
 import ParticlesBg from 'particles-bg';
+import Profile from './components/Profile/Profile';
 
 const initialState = {
       input: '', // search form
       imageUrl: '', // image url
       boxes: [], // face boxes
-      route: 'signin', // default route
-      isSignedIn: false, // logged out
+      route: 'signin', // default route !!CHANGE BACK TO signin
+      isSignedIn: false, // logged out !!CHANGE BACK TO false
+      isProfileOpen: false,
       status: '', // status messages
       errors: '', // error messages
       user: { // user details
@@ -22,7 +25,9 @@ const initialState = {
         name: '',
         email: '',
         entries: 0,
-        joined: ''
+        joined: '',
+        pet: '',
+        age: ''
   }
 }
 
@@ -129,26 +134,51 @@ class App extends Component {
     };
 
 // Route change function
+    // onRouteChange = (route) => {
+    //   if (route === 'signout') {
+    //    return this.setState({isSignedIn: false})
+    //   } else if (route === 'home') {
+    //     this.setState({isSignedIn: true})
+    //   } else {
+    //     this.setState({isSignedIn: false})
+    //   }
+    //   this.setState({route: route});
+    // }
     onRouteChange = (route) => {
-      if (route === 'signin') {
-        this.setState({isSignedIn: false})
+      if (route === 'signout') {
+       return this.setState(initialState)
       } else if (route === 'home') {
         this.setState({isSignedIn: true})
-      } else {
-        this.setState({isSignedIn: false})
       }
       this.setState({route: route});
     }
 
+    toggleModal = () => {
+      this.setState(prevState => ({
+        ...prevState,
+        isProfileOpen: !prevState.isProfileOpen
+      }))
+    }
+
     // App render
     render() {
-      const { isSignedIn, imageUrl, route, boxes } = this.state;
+      const { isSignedIn, imageUrl, route, boxes, isProfileOpen, user } = this.state;
       return (
         <div className="App">
           <ParticlesBg color="#118DFF" num={150} type="cobweb" bg={true} /> 
           <Navigation isSignedIn={isSignedIn} 
           onSignOut={this.onSignOut}
-          onRouteChange={this.onRouteChange} />
+          onRouteChange={this.onRouteChange}
+          toggleModal={this.toggleModal} />
+           { isProfileOpen && 
+          <Modal>
+            <Profile
+            user={user}
+            isProfileOpen={isProfileOpen} 
+            toggleModal={this.toggleModal}>
+            </Profile>
+          </Modal>
+          }
           <Logo />
           { route === 'home' 
             ? <div>
