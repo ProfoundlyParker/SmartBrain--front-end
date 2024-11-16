@@ -28,7 +28,10 @@ class Signin extends React.Component {
 
     onSubmitSignIn = (e) => {
         e.preventDefault();
-        fetch('https://parkers-smartbrain-api.fly.dev/signin', {
+        const API_URL = window.location.hostname === 'localhost'
+        ? 'http://localhost:3001'
+        : 'https://parkers-smartbrain-api.fly.dev';
+        fetch(`${API_URL}/signin`, {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -37,9 +40,9 @@ class Signin extends React.Component {
             })
         })
         .then(response => response.json())
-        .then(user => {
-            if (user.id) {
-                this.props.loadUser(user);
+        .then(data => {
+            if (data.userId) {
+                this.props.loadUser(data);
                 this.props.onRouteChange('home');
                 this.setState({form: ''}) // set form to empty
             } else {
