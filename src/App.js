@@ -15,8 +15,8 @@ const initialState = {
       input: '', // search form
       imageUrl: '', // image url
       boxes: [], // face boxes
-      route: 'signin', // default route !!CHANGE BACK TO signin
-      isSignedIn: false, // logged out !!CHANGE BACK TO false
+      route: 'signin', // default route
+      isSignedIn: false, // logged out
       isProfileOpen: false,
       status: '', // status messages
       errors: '', // error messages
@@ -26,8 +26,7 @@ const initialState = {
         email: '',
         entries: 0,
         joined: '',
-        pet: '',
-        age: ''
+        pronouns: '',
   }
 }
 
@@ -36,6 +35,54 @@ class App extends Component {
     super();
     this.state = initialState;
   }
+
+  componentDidMount() {
+    const token = window.sessionStorage.getItem('token');
+    if (token) {
+      const API_URL = window.location.hostname === 'localhost'
+        ? 'http://localhost:3001'
+        : 'https://parkers-smartbrain-api.fly.dev';
+      fetch(`${API_URL}/signin`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        }
+      })
+      .then(resp => resp.json())
+      .then(data => {
+        if (data && data.id) {
+          return fetch(`${API_URL}/profile/${data.id}`, {
+            method: 'get',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': token
+            }
+          })
+          .then(resp => resp.json())
+          .then(user => {
+            if (user && user.email) {
+              this.loadUser(user)
+              this.onRouteChange('home')
+            } else {
+              console.error('User profile is invalid:', user);
+              window.sessionStorage.removeItem('token'); // Clear invalid token
+              this.onRouteChange('signin'); // Redirect to sign-in
+            }
+          })
+        } else {
+          console.error('Signin response invalid:', data);
+          window.sessionStorage.removeItem('token'); // Clear invalid token
+          this.onRouteChange('signin'); // Redirect to sign-in
+        }
+      })
+      .catch(err => {
+        console.error('Error during authentication:', err);
+        window.sessionStorage.removeItem('token'); // Clear invalid token
+        this.onRouteChange('signin'); // Redirect to sign-in
+      });
+    }
+  }
 // Logged in user details
   loadUser = (data) => {
     this.setState({user: {
@@ -43,36 +90,39 @@ class App extends Component {
         name: data.name,
         email: data.email,
         entries: data.entries,
-        joined: data.joined
+        joined: data.joined,
+        pronouns: data.pronouns
   }})
   }
 
   // Face API bounding box
   calculateFaceLocation = (data) => {
-    const image = document.getElementById('inputimage'); // get image dimension
-    const width = Number(image.width); // image width
-    const height = Number(image.height); // image height
-    const boxData = data.outputs[0].data.regions
+    console.log('API response for face detection:', data);
+      const image = document.getElementById('inputimage'); // get image dimension
+      const width = Number(image.width); // image width
+      const height = Number(image.height); // image height
+      const boxData = data?.outputs[0]?.data?.regions;
 
-    if (boxData) { // if boxData not empty
-      this.setState({status: `${boxData.length} human face(s) detected`});
-      return boxData.map(face => {
-        const clarifaiFace = face.region_info.bounding_box;
-        return {
-          leftCol: clarifaiFace.left_col * width,
-          topRow: clarifaiFace.top_row * height,
-          rightCol: width - (clarifaiFace.right_col * width),
-          bottomRow: height - (clarifaiFace.bottom_row * height)
-        }
-      });
-    } else { // if boxData empty
-      this.setState({errors: (`No human face(s) detected, please try another image`)});
-    }
-    }
+      if (boxData) { // if boxData not empty
+        this.setState({status: `${boxData.length} human face(s) detected`});
+        return boxData.map(face => {
+          const clarifaiFace = face.region_info.bounding_box;
+          return {
+            leftCol: clarifaiFace.left_col * width,
+            topRow: clarifaiFace.top_row * height,
+            rightCol: width - (clarifaiFace.right_col * width),
+            bottomRow: height - (clarifaiFace.bottom_row * height)
+          }
+        });
+      } else { // if boxData empty
+        this.setState({errors: (`No human face(s) detected, please try another image`)});
+  }}
 
     // Display face boxes
   displayFaceBox = (boxes) => {
-    this.setState({boxes: boxes});
+    if (boxes) {
+      this.setState({boxes: boxes});
+    }
   }
 
   // ImageLinkForm
@@ -91,61 +141,105 @@ class App extends Component {
 
    // Signout function
    onSignOut = () => {
+    window.sessionStorage.removeItem('token');
     this.onSubmitReset(); // reset all values for image form
     this.onRouteChange('signin');
 }
 
-// Submit Input Button - Activates API Response
-  onPictureSubmit = (event) => {
-    event.preventDefault(event);
-    this.onSubmitReset(); // call function to reset all form values
-    this.setState({ imageUrl: this.state.input });
-
-      if (this.state.input.length === 0) {
-        this.setState({errors: 'Please paste an image link into the field to test'});
+  onRegister = (userDetails) => {
+    const API_URL = window.location.hostname === 'localhost'
+      ? 'http://localhost:3001'
+      : 'https://parkers-smartbrain-api.fly.dev';
+    
+    fetch(`${API_URL}/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userDetails)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.token) {
+        window.sessionStorage.setItem('token', data.token); // Store token
+        this.loadUser(data.user); // Load user details
+        this.onRouteChange('home'); // Redirect to home
       } else {
-          fetch('https://parkers-smartbrain-api.fly.dev/imageurl', {
-              method: 'POST',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({
-                  input: this.state.input
-              })
-            })
-          .then(response => response.json())
-          .then(response => {
-          if (response) {
-          fetch('https://parkers-smartbrain-api.fly.dev/image', {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                id: this.state.user.id
-            })
-          })
-          .then(response => response.json())
-          .then(count => {
-            this.setState(Object.assign(this.state.user, { entries: count }));
-          })
-          .catch(console.log) // Error handling
-        }
-        this.displayFaceBox(this.calculateFaceLocation(response));
-     })
-     .catch(error => console.log('error', error));
-    }
-    };
+        this.setState({ errors: 'Registration failed. Please try again.' }); // Handle error
+      }
+    })
+    .catch(err => this.setState({ errors: 'Something went wrong. Please try again.' }));
+  };
+
+
+// Submit Input Button - Activates API Response
+onPictureSubmit = (event) => {
+  event.preventDefault();
+
+  // Reset only input-related state initially
+  this.setState({
+    imageUrl: this.state.input,
+    errors: '',
+    status: ''
+  });
+
+  // Validate input
+  if (!this.state.input) {
+    this.setState({ errors: 'Please paste an image link into the field to test' });
+    return;
+  }
+
+  const API_URL = window.location.hostname === 'localhost'
+    ? 'http://localhost:3001'
+    : 'https://parkers-smartbrain-api.fly.dev';
+
+  // Call imageurl API
+  fetch(`${API_URL}/imageurl`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': window.sessionStorage.getItem('token') || ''
+    },
+    body: JSON.stringify({ input: this.state.input })
+  })
+    .then(response => response.json())
+    .then(response => {
+      if (!response || !response.outputs || response.outputs.length === 0) {
+        throw new Error('Invalid face detection response');
+      }
+
+      // Update the face boxes
+      const boxes = this.calculateFaceLocation(response);
+      this.displayFaceBox(boxes);
+
+      // Update the entry count
+      return fetch(`${API_URL}/image`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': window.sessionStorage.getItem('token') || ''
+        },
+        body: JSON.stringify({ id: this.state.user.id })
+      });
+    })
+    .then(response => response.json())
+    .then(entries => {
+      // Update user entries
+      this.setState(Object.assign(this.state.user, { entries: entries }));
+    })
+    .catch(error => {
+      // Handle errors
+      console.error('Error:', error);
+      this.setState({
+        errors: 'An error occurred while processing your request. Please try again.'
+      });
+    });
+};
+
+
 
 // Route change function
-    // onRouteChange = (route) => {
-    //   if (route === 'signout') {
-    //    return this.setState({isSignedIn: false})
-    //   } else if (route === 'home') {
-    //     this.setState({isSignedIn: true})
-    //   } else {
-    //     this.setState({isSignedIn: false})
-    //   }
-    //   this.setState({route: route});
-    // }
     onRouteChange = (route) => {
       if (route === 'signout') {
+       window.sessionStorage.removeItem('token');
        return this.setState(initialState)
       } else if (route === 'home') {
         this.setState({isSignedIn: true})
@@ -184,7 +278,6 @@ class App extends Component {
           <Logo />
           { route === 'home' 
             ? <div>
-              {/* <Logo /> */}
               <Rank name={this.state.user.name}
               entries={this.state.user.entries}
               />
@@ -209,6 +302,7 @@ class App extends Component {
               onRouteChange={this.onRouteChange}
               />
               : <Register
+              onRegister={this.onRegister}
               loadUser={this.loadUser} 
               onRouteChange={this.onRouteChange}
               />
