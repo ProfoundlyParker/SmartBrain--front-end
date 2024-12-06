@@ -25,6 +25,9 @@ class Signin extends React.Component {
         this.setState({signInPassword: event.target.value})
     }
 
+    saveAuthTokenInSession = (token) => {
+        window.sessionStorage.setItem('token', token);
+    }
 
     onSubmitSignIn = (e) => {
         e.preventDefault();
@@ -41,9 +44,23 @@ class Signin extends React.Component {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.userId) {
-                this.props.loadUser(data);
-                this.props.onRouteChange('home');
+            if (data.userId && data.success === 'true') {
+                this.saveAuthTokenInSession(data.token);
+                      fetch(`${API_URL}/profile/${data.userId}`, {
+                        method: 'get',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'Authorization': data.token
+                        }
+                      })
+                      .then(resp => resp.json())
+                      .then(user => {
+                        if (user && user.email) {
+                          this.props.loadUser(user)
+                          this.props.onRouteChange('home')
+                        }
+                      })
+                  .catch(console.log('errors happening'))
                 this.setState({form: ''}) // set form to empty
             } else {
                 this.setState({form: (<>Credentials invalid!<br/>Please check your credentials and try again.</>)})
@@ -63,46 +80,40 @@ class Signin extends React.Component {
                 <div className="mt3">
                     <label className="db fw6 lh-copy f6" 
                     htmlFor="email-address">Email</label>
-                    <input className={`f5 pa2 input-reset ba bg-transparent hover-bg-black hover-white hover-black w-100${formErrors.email && 'ba bw2 b--red'}`} 
+                    <input className={`rounded input f5 pa2 input-reset ba hover-bg-black hover-white hover-black ${formErrors.email && 'ba bw2 b--red'}`} 
                     type="email" 
                     name="email-address"  
                     placeholder="Enter your email"
                     id="email-address" 
                     onChange = {this.onEmailChange}
                     />
-                    {formErrors.email && (
-                        <div className="dib bg-red white ma3 pa2 f5 br2 shadow-2">{formErrors.email}</div>
-                    )}
                 </div>
                 <div className="mt3">
                     <label className="db fw6 lh-copy f6" 
                     htmlFor="password">Password</label>
-                    <input className={`b pa2 input-reset ba bg-transparent hover-black hover-bg-black hover-white w-100${formErrors.password && 'ba bw2 b--red'}`}
+                    <input className={`rounded input pa2 input-reset ba hover-black hover-bg-black hover-white ${formErrors.password && 'ba bw2 b--red'}`}
                     type="password" 
                     name="password"  
                     placeholder="Enter your password"
                     id="password" 
                     onChange = {this.onPasswordChange}
                     />
-                    {formErrors.password && (
-                        <div className="dib bg-red white ma3 pa2 f5 br2 shadow-2">{formErrors.password}</div>
-                    )}
                 </div>
                 </fieldset>
+                {this.state.form && (
+                    <div className="rounded dib bg-red white ma3 pa2 f5 shadow-2 br2 1h-copy">{this.state.form}</div>
+                )}
                 <div className="mt3 tc">
                 <input 
                 id="btn"
                 onClick={this.onSubmitSignIn}
-                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
+                className="rounded b ph3 pv2 input-reset b white grow pointer f4 dib signin" 
                 type="submit" 
                 value="Sign In" 
                 />
                 </div>
-                {this.state.form && (
-                    <div className="dib bg-red white ma3 pa2 f5 shadow-2 br2 1h-copy">{this.state.form}</div>
-                )}
-                <div className="lh-copy mt3">
-                <p onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
+                <div className="lh-copy mt2">
+                <p onClick={() => onRouteChange('register')} className="f4 link dim black db pointer">Register</p>
                 </div>
             </div>
             </main>
