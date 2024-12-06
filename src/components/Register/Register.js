@@ -8,7 +8,8 @@ class Register  extends React.Component {
         this.state = {
             email: '',
             password: '',
-            name: ''
+            name: '',
+            formError: '',
         }
     }
 
@@ -23,8 +24,22 @@ class Register  extends React.Component {
     onPasswordChange = (event) => {
         this.setState({password: event.target.value})
     }
-    onSubmitSignIn = () => {
-        fetch('https://parkers-smartbrain-api.fly.dev/register', {
+    onSubmitRegister = (e) => {
+        e.preventDefault();
+        const { email, password, name } = this.state;
+
+        // Check for empty fields
+        if (!name || !email || !password) {
+            this.setState({
+                formError: 'All fields are required! Please fill out the form completely.',
+            });
+            return;
+        }
+
+        const API_URL = window.location.hostname === 'localhost'
+        ? 'http://localhost:3001'
+        : 'https://parkers-smartbrain-api.fly.dev';
+        fetch(`${API_URL}/register`, {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -34,15 +49,27 @@ class Register  extends React.Component {
             })
         })
         .then(response => response.json())
-        .then(user => {
-            if (user.id) {
-                this.props.loadUser(user);
+        .then(data => {
+            if (data.user && data.token) {
+                // Save token in session storage
+                window.sessionStorage.setItem('token', data.token);
+                this.props.loadUser(data.user);
                 this.props.onRouteChange('home');
-            } 
+            } else {
+                this.setState({
+                    formError: 'Registration failed! Please check your details and try again.',
+                });
+            }
         })
-    }
+        .catch((error) =>
+            this.setState({
+                formError: 'Something went wrong! Please try again later.',
+            })
+        );
+    };
 
     render() {
+        const { formError } =this.state;
         return (
             <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
             <main className="pa4 black-80">
@@ -53,7 +80,7 @@ class Register  extends React.Component {
                 <div className="mt3">
                     <label className="db fw6 lh-copy f6" 
                     htmlFor="name">Name</label>
-                    <input className="pa2 hover-black input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                    <input  className="rounded input pa2 hover-black input-reset ba hover-bg-black hover-white" 
                     type="text" 
                     name="name"  
                     id="name" 
@@ -64,7 +91,7 @@ class Register  extends React.Component {
                 <div className="mt3">
                     <label className="db fw6 lh-copy f6" 
                     htmlFor="email">Email</label>
-                    <input className="pa2 hover-black input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                    <input  className="rounded input pa2 hover-black input-reset ba hover-bg-black hover-white"
                     type="email" 
                     name="email"  
                     id="email" 
@@ -75,7 +102,7 @@ class Register  extends React.Component {
                 <div className="mv3">
                     <label className="db fw6 lh-copy f6" 
                     htmlFor="password">Password</label>
-                    <input className="b hover-black pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                    <input className="rounded input hover-black pa2 input-reset ba hover-bg-black hover-white"
                     type="password" 
                     name="password"  
                     id="password" 
@@ -84,10 +111,15 @@ class Register  extends React.Component {
                     />
                 </div>
                 </fieldset>
-                <div className="">
+                {formError && (
+                            <div className="rounded dib bg-red white ma3 pa2 f5 shadow-2 br2 lh-copy" style={{ marginTop: '-0.5rem' }}>
+                                {formError}
+                            </div>
+                )}
+                <div>
                 <input 
-                onClick={this.onSubmitSignIn}
-                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
+                onClick={this.onSubmitRegister}
+                className="rounded signin b ph3 pv2 input-reset ba b--black white grow pointer f4 dib" 
                 type="submit" 
                 value="Register" 
                 />
