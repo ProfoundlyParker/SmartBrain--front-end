@@ -1,0 +1,13 @@
+.input:hover {
+    background-color: #1e1f21db !important;
+    color: white !important;
+}
+
+.b { 
+    font-weight: bold;
+}
+
+.signin {
+    background-color: #2d3568db !important;
+    border: 1px #2d3568db !important;
+}

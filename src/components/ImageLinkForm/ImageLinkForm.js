@@ -5,16 +5,21 @@ import "./ImageLinkForm.css"
 const ImageLinkForm = ({ input, onInputChange, onPictureSubmit, errors, status }) => {
     return (
         <div>
-        <p className="f3">
-            {'This Magic Brain will detect faces in your pictures! Paste an image link below to find faces in your images!'}
+        <p className="f3" style={{
+            maxWidth: '70%',
+            margin: '25px auto',
+            textAlign: 'center',
+        }}>
+            {'This app will detect faces in your pictures! Paste an image link below to find faces in your images!'}
         </p>
         <div className="center">
-        <div className="form pa3 shadow-5 ba bw0 b--black center">
+        <div className="rounded form pa3 shadow-5 ba bw0 b--black center">
             <input 
             id="imageupload"
             className={`f4 pa2 input-reset ba bg-white hover-bg-near-white hover-black${errors && 'ba bw2 b--red'}`}
             type="search"
             placeholder="Paste image link here" 
+            style={{ width: '19rem' }}
             onChange={onInputChange}
             value={input}
             />
