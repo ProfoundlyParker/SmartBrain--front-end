@@ -1,6 +1,9 @@
 import React from "react";
 import './Profile.css';
 
+const API_URL = window.location.hostname === 'localhost'
+    ? 'http://localhost:3001'
+    : 'https://parkers-smartbrain-api.fly.dev';
 // Displays profile information where user can update name, email, and pronouns
 class Profile extends React.Component {
     constructor(props) {
@@ -29,7 +32,7 @@ class Profile extends React.Component {
     }
 
     onProfileUpdate = (data) => {
-        fetch(`http://localhost:3001/profile/${this.props.user.id}`, {
+        fetch(`${API_URL}/profile/${this.props.user.id}`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
