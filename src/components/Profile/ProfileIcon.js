@@ -12,8 +12,8 @@ class ProfileIcon extends React.Component {
         super(props);
         this.toggle = this.toggle.bind(this);
         this.state = {
-            dropdownOpen: false
-        }
+            dropdownOpen: false,
+        };
     }
 
     toggle = () => {
@@ -31,8 +31,8 @@ class ProfileIcon extends React.Component {
                 data-toggle="dropdown" 
                 aria-expanded={this.state.dropdownOpen}>
                          <img
-                                src="https://plus.unsplash.com/premium_photo-1664299466090-8b508c9a7fe6?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmxhY2slMjBwdXBweXxlbnwwfHwwfHx8MA%3D%3D"
-                                class="br-100 ba h3 w3 dib" alt="avatar" style={{ cursor: 'pointer' }}>
+                                src={this.props.profilePic || 'https://plus.unsplash.com/premium_photo-1664299466090-8b508c9a7fe6?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmxhY2slMjBwdXBweXxlbnwwfHwwfHx8MA%3D%3D'}
+                                className="br-100 h3 w3 dib" alt="avatar" style={{ cursor: 'pointer' }}>
                         </img>
                </DropdownToggle>
                 <DropdownMenu className="b--transparent shadow-5" style={{marginTop: '2rem', backgroundColor: 'rgba(255, 255, 255, 0.5)'}}>

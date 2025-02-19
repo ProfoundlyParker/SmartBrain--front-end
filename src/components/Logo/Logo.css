@@ -2,3 +2,21 @@
 .Tilt {
     background: linear-gradient(to right, rgb(195, 124, 228), rgb(83, 172, 228)); 
 }
+
+.logo-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: -3rem;
+    margin-left: 1rem;
+}
+
+@media (max-width: 768px) {
+    .Tilt {
+        height: 100px;
+        width: 100px;
+    }
+    .logo-container {
+        margin-top: -6.5rem;
+    }
+}

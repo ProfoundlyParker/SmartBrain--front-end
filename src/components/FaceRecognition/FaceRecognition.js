@@ -9,8 +9,6 @@ const FaceRecognition = ({ imageUrl, boxes, errors }) => {
             id="inputimage" 
             src={imageUrl} 
             alt='' 
-            width='500' 
-            height='auto' 
             className={`bg-white shadow-5 b--solid${errors ? 'red' : 'yellow'}`}
             />
             {boxes &&

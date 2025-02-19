@@ -1,6 +1,8 @@
 /* Form background pattern */
 .form {
-    width: auto;
+    width: 50%;
+    max-width: 600px;
+    min-width: 300px;
     background-color:#459ef6;
     background-image: linear-gradient(30deg, rgb(71, 130, 249) 12%, transparent 12.5%, transparent 87%, rgb(71, 130, 249) 87.5%, rgb(43, 104, 224)),
     linear-gradient(150deg, rgb(71, 130, 249) 12%, transparent 12.5%, transparent 87%, rgb(58, 113, 223) 87.5%, rgb(43, 104, 224)),
@@ -15,4 +17,20 @@
 /* Form Status and Error Messages*/
 .error, .status {
     width: fit-content;
+}
+
+@media (max-width: 768px) {
+    .form {
+        width: 80%;
+    }
+
+    input[type="search"], .form button {
+        max-width: 70%;
+    }
+
+    .form button {
+        font-size: 4vw;
+        min-width: 90px;
+        padding: 0.5rem 1rem;
+    }
 }

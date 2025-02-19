@@ -11,5 +11,6 @@
 /* Image positioning */
 .facerec {
     position: relative;
-    width: 500px;
+    width: 80%;
+    padding-bottom: 2rem;
 }
