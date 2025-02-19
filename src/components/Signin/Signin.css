@@ -7,7 +7,12 @@
     font-weight: bold;
 }
 
-.signin {
+.register .signin {
     background-color: #2d3568db !important;
     border: 1px #2d3568db !important;
+    justify-content: center;
+    width: fit-content;
+    max-width: 20rem;
+    align-items: center;
+    text-align: center;
 }

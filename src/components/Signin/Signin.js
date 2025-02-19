@@ -32,7 +32,7 @@ class Signin extends React.Component {
     onSubmitSignIn = (e) => {
         e.preventDefault();
         const API_URL = window.location.hostname === 'localhost'
-        ? 'http://localhost:3001'
+        ? 'http://localhost:8080'
         : 'https://parkers-smartbrain-api.fly.dev';
         fetch(`${API_URL}/signin`, {
             method: 'post',
@@ -67,7 +67,6 @@ class Signin extends React.Component {
             }
         })
     }
-
     render() {
         const { formErrors } = this.state;
         const { onRouteChange } = this.props;
@@ -75,6 +74,7 @@ class Signin extends React.Component {
             <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-3 center">
             <main className="pa4 black-80">
             <div className="measure">
+                <form onSubmit={this.onSubmitSignIn}>
                 <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                 <legend className="f1 fw6 ph0 mh0">Sign In</legend>
                 <div className="mt3">
@@ -103,11 +103,11 @@ class Signin extends React.Component {
                 {this.state.form && (
                     <div className="rounded dib bg-red white ma3 pa2 f5 shadow-2 br2 1h-copy">{this.state.form}</div>
                 )}
-                <div className="mt3 tc">
+                <div className="mt3 tc register">
                 <input 
                 id="btn"
                 onClick={this.onSubmitSignIn}
-                className="rounded b ph3 pv2 input-reset b white grow pointer f4 dib signin" 
+                className="rounded ph3 pv2 input-reset b white grow pointer f4 dib signin" 
                 type="submit" 
                 value="Sign In" 
                 />
@@ -115,6 +115,7 @@ class Signin extends React.Component {
                 <div className="lh-copy mt2">
                 <p onClick={() => onRouteChange('register')} className="f4 link dim black db pointer">Register</p>
                 </div>
+                </form>
             </div>
             </main>
             </article>

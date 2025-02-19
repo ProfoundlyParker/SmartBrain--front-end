@@ -27,6 +27,7 @@ const initialState = {
         entries: 0,
         joined: '',
         pronouns: '',
+        profilePic: 'https://plus.unsplash.com/premium_photo-1664299466090-8b508c9a7fe6?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmxhY2slMjBwdXBweXxlbnwwfHwwfHx8MA%3D%3D'
   }
 }
 
@@ -36,11 +37,60 @@ class App extends Component {
     this.state = initialState;
   }
 
+  
+fetchUserProfile = () => {
+  const userId = this.state.user.id;
+  if (!userId) return;
+  const API_URL = window.location.hostname === 'localhost'
+        ? 'http://localhost:8080'
+        : 'https://parkers-smartbrain-api.fly.dev';
+
+  fetch(`${API_URL}/get-user-profile?userId=${userId}`)
+      .then(response => response.json())
+      .then(data => {
+          if (data.profilePicUrl) {
+            this.setState(prevState => ({
+              user: { ...prevState.user, profilePic: data.profilePicUrl },
+              profilePic: data.profilePicUrl,
+            }));
+          }
+      })
+      .catch(err => console.error("Error fetching profile picture:", err));
+};
+
+  handleProfilePicUpdate = (newProfilePicUrl) => {
+    const userId = this.state.user.id;
+    const API_URL = window.location.hostname === 'localhost'
+        ? 'http://localhost:8080'
+        : 'https://parkers-smartbrain-api.fly.dev';
+
+    fetch(`${API_URL}/update-profile-pic`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            userId: userId,
+            profilePicUrl: newProfilePicUrl,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            this.fetchUserProfile();
+        } else {
+            console.error("Error updating profile picture:", data.error);
+        }
+    })
+    .catch(error => console.error("Request error:", error));
+};
+
   componentDidMount() {
+    this.fetchUserProfile();
     const token = window.sessionStorage.getItem('token');
     if (token) {
       const API_URL = window.location.hostname === 'localhost'
-        ? 'http://localhost:3001'
+        ? 'http://localhost:8080'
         : 'https://parkers-smartbrain-api.fly.dev';
       fetch(`${API_URL}/signin`, {
         method: 'post',
@@ -85,19 +135,27 @@ class App extends Component {
   }
 // Logged in user details
   loadUser = (data) => {
-    this.setState({user: {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        entries: data.entries,
-        joined: data.joined,
-        pronouns: data.pronouns
-  }})
-  }
+    this.setState(
+      {
+        user: {
+          id: data.id,
+          name: data.name,
+          email: data.email,
+          entries: data.entries,
+          joined: data.joined,
+          pronouns: data.pronouns,
+          profilePic: data.profilePic,
+        },
+      },
+      () => {
+        this.fetchUserProfile();
+      }
+    );
+  };
+
 
   // Face API bounding box
   calculateFaceLocation = (data) => {
-    console.log('API response for face detection:', data);
       const image = document.getElementById('inputimage'); // get image dimension
       const width = Number(image.width); // image width
       const height = Number(image.height); // image height
@@ -148,7 +206,7 @@ class App extends Component {
 
   onRegister = (userDetails) => {
     const API_URL = window.location.hostname === 'localhost'
-      ? 'http://localhost:3001'
+      ? 'http://localhost:8080'
       : 'https://parkers-smartbrain-api.fly.dev';
     
     fetch(`${API_URL}/register`, {
@@ -188,7 +246,7 @@ onPictureSubmit = (event) => {
   }
 
   const API_URL = window.location.hostname === 'localhost'
-    ? 'http://localhost:3001'
+    ? 'http://localhost:8080'
     : 'https://parkers-smartbrain-api.fly.dev';
 
   // Call imageurl API
@@ -263,7 +321,10 @@ onPictureSubmit = (event) => {
           <Navigation isSignedIn={isSignedIn} 
           onSignOut={this.onSignOut}
           onRouteChange={this.onRouteChange}
-          toggleModal={this.toggleModal} />
+          toggleModal={this.toggleModal}
+          profilePic={this.state.user.profilePic}
+          handleProfilePicUpdate={this.handleProfilePicUpdate}
+         />
            { isProfileOpen && 
           <Modal>
             <Profile
@@ -271,13 +332,16 @@ onPictureSubmit = (event) => {
             isProfileOpen={isProfileOpen} 
             toggleModal={this.toggleModal}
             loadUser={this.loadUser}
+            profilePic={this.state.user.profilePic}
+            handleProfilePicUpdate={this.handleProfilePicUpdate}
+            userId={this.state.user.id}
             >
             </Profile>
           </Modal>
           }
           <Logo />
           { route === 'home' 
-            ? <div>
+            ? <div className='body-div'>
               <Rank name={this.state.user.name}
               entries={this.state.user.entries}
               />
@@ -298,14 +362,14 @@ onPictureSubmit = (event) => {
               </div>
             : (
               route === 'signin' 
-              ? <Signin loadUser={this.loadUser}
+              ? <div className='signinandregister'><Signin loadUser={this.loadUser}
               onRouteChange={this.onRouteChange}
-              />
-              : <Register
+              /></div>
+              : <div className='signinandregister'><Register
               onRegister={this.onRegister}
               loadUser={this.loadUser} 
               onRouteChange={this.onRouteChange}
-              />
+              /></div>
           )}
         </div>
       );
