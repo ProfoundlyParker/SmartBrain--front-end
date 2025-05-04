@@ -6,7 +6,7 @@ import ProfileIcon from "../Profile/ProfileIcon";
 const Navigation = ({ onRouteChange, isSignedIn, toggleModal, profilePic, handleProfilePicUpdate }) => {
         if(isSignedIn) {
         return (
-        <nav style={{display: 'flex', justifyContent: 'flex-end'}}>
+        <nav>
             <ProfileIcon onRouteChange={onRouteChange} toggleModal={toggleModal} profilePic={profilePic} handleProfilePicUpdate={handleProfilePicUpdate}/>
         </nav>
         );

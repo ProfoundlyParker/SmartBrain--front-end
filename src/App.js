@@ -318,13 +318,17 @@ onPictureSubmit = (event) => {
       return (
         <div className="App">
           <ParticlesBg color="#118DFF" num={150} type="cobweb" bg={true} /> 
-          <Navigation isSignedIn={isSignedIn} 
-          onSignOut={this.onSignOut}
-          onRouteChange={this.onRouteChange}
-          toggleModal={this.toggleModal}
-          profilePic={this.state.user.profilePic}
-          handleProfilePicUpdate={this.handleProfilePicUpdate}
-         />
+          <div className="top-bar">
+          <Logo />
+            <Navigation 
+              isSignedIn={isSignedIn} 
+              onSignOut={this.onSignOut}
+              onRouteChange={this.onRouteChange}
+              toggleModal={this.toggleModal}
+              profilePic={this.state.user.profilePic}
+              handleProfilePicUpdate={this.handleProfilePicUpdate}
+            />
+        </div>
            { isProfileOpen && 
           <Modal>
             <Profile
@@ -339,7 +343,6 @@ onPictureSubmit = (event) => {
             </Profile>
           </Modal>
           }
-          <Logo />
           { route === 'home' 
             ? <div className='body-div'>
               <Rank name={this.state.user.name}

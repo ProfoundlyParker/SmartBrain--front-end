@@ -14,3 +14,10 @@
 .signinandregister {
   padding-top: 2rem;
 }
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem;
+}
