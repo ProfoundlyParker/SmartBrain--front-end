@@ -85,7 +85,7 @@ Or, you can register a new account. <strong>Note: please use test login info fro
 <li>Mobile-friendly
 </li>
 <br>
-<img src='readme-imgs/sb-mobile.gif'>
+<img src='readme-imgs/sb-mobile.gif.gif'>
 
 <h3>Technical challenges I overcame:</h3>
 <li>With Clarifai REST API integration, had numerous issues with outdated code and documentation. Was also able to instruct Clarifai model to detect multiple faces, not just one</li>
