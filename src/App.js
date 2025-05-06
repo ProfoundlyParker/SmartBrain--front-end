@@ -157,8 +157,7 @@ fetchUserProfile = () => {
   // Face API bounding box
   calculateFaceLocation = (data) => {
       const image = document.getElementById('inputimage'); // get image dimension
-      const width = Number(image.width); // image width
-      const height = Number(image.height); // image height
+      const { width, height } = image.getBoundingClientRect(); // img width and height
       const boxData = data?.outputs[0]?.data?.regions;
 
       if (boxData) { // if boxData not empty

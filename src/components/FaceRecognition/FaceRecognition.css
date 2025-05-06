@@ -1,3 +1,9 @@
+/* Image container style */
+.image-container {
+    position: relative;
+    display: inline-block;
+}  
+
 /* Face box style */
 .bounding-box {
     position: absolute;
@@ -10,7 +16,6 @@
 
 /* Image positioning */
 .facerec {
-    position: relative;
-    width: 80%;
+    text-align: center;
     padding-bottom: 2rem;
 }
