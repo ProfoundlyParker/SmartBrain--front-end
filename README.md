@@ -59,7 +59,7 @@ Or, you can register a new account. <strong>Note: please use test login info fro
 <li>Responsive layout using Flexbox
 </li>
 <br>
-<img src='readme-imgs/sb-flexbox.png' style="width: 35rem;">
+<img src='readme-imgs/sb-flexbox.png.png' style="width: 35rem;">
 <li>TS Particles for background animation
 </li>
 <br>
