@@ -88,6 +88,7 @@ Or, you can register a new account. <strong>Note: please use test login info fro
 <img src='readme-imgs/sb-mobile.gif.gif'>
 
 <h3>Technical challenges I overcame:</h3>
+<ul>
 <li>With Clarifai REST API integration, had numerous issues with outdated code and documentation. Was also able to instruct Clarifai model to detect multiple faces, not just one</li>
 <li>Troubleshooted with free hosting services for server, databases, and front-end app deployment</li>
 <li>Resolved numerous issues related to using a Windows OS vs Mac (i.e. PATH errors)</li>
@@ -95,11 +96,14 @@ Or, you can register a new account. <strong>Note: please use test login info fro
 <li>Setting up ENV variables properly on the server for both local development and production</li>
 <li>Learned several new technologies: Node.js, Express, Bcrypt, PostgreSQL, Redis, Docker, AWS, JWT, Knex.js</li>
 <li>Challenged myself by using ES6+ syntax for Node.js (Back-end is 100% ES6+ syntax)</li>
+</ul>
 
 <h3>Possible Future Improvements:</h3>
+<ul>
 <li>Store submitted images in a gallery view</li>
 <li>Allow users to upload local images for face detection API</li>
 <li>Display a loading spinner while logging in</li>
+</ul>
 
 
 <h1><a href='https://github.com/ProfoundlyParker/SmartBrain--front-end'>View Back-End Repository</a></h1>
